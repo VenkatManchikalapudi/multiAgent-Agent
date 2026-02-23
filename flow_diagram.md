@@ -11,8 +11,10 @@ graph TD
     D -->|BOTH| F
     E --> G[Validate Analyst Response]
     F --> H[Validate Coder Response]
-    G --> I[Analyst Report]
-    H --> J[Coder Output]
+    G -->|Invalid| E
+    H -->|Invalid| F
+    G -->|Valid| I[Analyst Report]
+    H -->|Valid| J[Coder Output]
     I --> K[Synthesis by Orchestrator - Async]
     J --> K
     K --> L[Final User-Friendly Response]
