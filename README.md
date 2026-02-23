@@ -55,7 +55,13 @@ All models are locally installed and managed using **Ollama**, ensuring fast and
 Run the Orchestrator:
 
 ```bash
-python3 agents/orchestrator.py
+python3 -m agents.orchestrator
+```
+
+Alternatively, use the main entry point:
+
+```bash
+python3 main.py
 ```
 
 ## Project Structure
@@ -70,16 +76,48 @@ python3 agents/orchestrator.py
 
 ## Environment Variables
 
-The `.env` file should contain the following variables:
+The `.env` file should contain the following variable:
 
-- `SEARCH_API_KEY`: Your Google Custom Search API key.
-- `SEARCH_ENGINE_ID`: Your Google Custom Search Engine ID.
+- `SERPAPI_KEY`: Your SerpAPI key.
 
 Example `.env` file:
 
 ```
-SEARCH_API_KEY=your_api_key
-SEARCH_ENGINE_ID=your_search_engine_id
+SERPAPI_KEY=your_serpapi_key
+```
+
+## Updates
+
+### New Features
+
+- Transitioned from Google Custom Search API to SerpAPI for web searches.
+- Added enhanced logging for debugging and monitoring.
+- Improved input validation and response guardrails.
+
+### Updated Environment Variables
+
+The `.env` file should now include:
+
+- `SERPAPI_KEY`: Your SerpAPI key.
+
+Example `.env` file:
+
+```
+SERPAPI_KEY=your_serpapi_key
+```
+
+### Updated Usage
+
+Run the Orchestrator with a custom prompt:
+
+```bash
+python3 -m agents.orchestrator
+```
+
+Alternatively, use the main entry point:
+
+```bash
+python3 main.py
 ```
 
 ## Contributing

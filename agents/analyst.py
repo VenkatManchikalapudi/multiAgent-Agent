@@ -6,6 +6,7 @@ import os
 import re
 import logging
 from dotenv import load_dotenv
+from serpapi import GoogleSearch
 
 # Load environment variables from .env file
 load_dotenv()
@@ -57,25 +58,20 @@ class Analyst:
             return "I'm sorry, I encountered an error while processing your request."
 
     def web_search(self, query):
-        """Standard Google Search retrieval with enhanced error handling."""
+        """Perform a web search using SerpAPI."""
         logging.info(f"🔍 Analyst is searching the web for: {query}")
-        encoded_query = urlencode({"q": query})
-        url = f"https://www.googleapis.com/customsearch/v1?{encoded_query}&key={self.search_api_key}&cx={self.search_engine_id}"
         try:
-            r = requests.get(url)
-            r.raise_for_status()
-            items = r.json().get("items", [])
+            search = GoogleSearch({"q": query, "api_key": os.getenv("SERP_API_KEY")})
+            results = search.get_dict()
+            items = results.get("organic_results", [])
             if not items:
                 logging.warning("No results found.")
                 return "No results found."
             # We only need the snippets for the model to 'read'
-            return "\n".join([f"- {i['title']}: {i['snippet']}" for i in items[:3]])
-        except requests.exceptions.RequestException as e:
+            return "\n".join([f"- {item['title']}: {item['snippet']}" for item in items[:3]])
+        except Exception as e:
             logging.error(f"Error during web search: {e}")
-            return "Search failed due to a network error."
-        except KeyError:
-            logging.error("Unexpected response format from Google API.")
-            return "Search failed due to unexpected response format."
+            return "Search failed due to an error."
 
     def validate_response(self, response, expected_keywords=None):
         """Validate the model's response to ensure it is relevant and clear."""

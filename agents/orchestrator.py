@@ -1,7 +1,7 @@
 import ollama
 import json
-from .analyst import Analyst
-from .coder import Coder
+from agents.analyst import Analyst
+from agents.coder import Coder
 import logging
 import asyncio
 
@@ -134,11 +134,11 @@ class Orchestrator:
 
 if __name__ == "__main__":
     boss = Orchestrator()
-    
+
     # Test with a multi-part query
     query = "Analyze the trend of AI agents in 2026 and write a Python script to track them."
-    final_output = boss.run(query)
-    
+    final_output = asyncio.run(boss.run(query))
+
     print("\n" + "="*30)
     print("FINAL RESULT FROM AGENTS:")
     print("="*30)
