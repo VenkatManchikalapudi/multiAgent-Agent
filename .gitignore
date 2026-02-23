@@ -69,3 +69,9 @@ pip-delete-this-directory.txt
 *.rej
 *.sublime-workspace
 .env
+
+# Ignore Python cache files and directories
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
